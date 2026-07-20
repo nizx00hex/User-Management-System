@@ -34,9 +34,9 @@ function sanitizeInput($data) {
 function displayStatusBadge($status) {
     $badge = '';
     if($status === 'active') {
-        $badge = '<span class="badge text-bg-success">Active</span>';
+        $badge = '<span class="badge rounded-pill text-bg-success">Active</span>';
     } else if($status === 'blocked') {
-        $badge = '<span class"badge badge-danger">Blocked</span>';
+        $badge = '<span class="badge rounded-pill text-bg-danger">Blocked</span>';
     }
     return $badge;
 }

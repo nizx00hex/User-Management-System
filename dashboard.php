@@ -15,25 +15,22 @@
     require_once 'includes/functions.php';
     
     $userManager = new UserManager();
-    $users = $userManager->getActiveUsers();
+    $users = $userManager->getAllUsers();
     ?>
     
     <div class="container">
         <h1>User Management System</h1>
         
         <div class="actions-bar">
-            <a href="create.php" class="btn btn-primary">Create New User</a>
+            <!-- <a href="create.php" class="btn btn-primary">Create New User</a> -->
             <form action="search.php" method="GET" class="search-form">
                 <input type="text" name="keyword" placeholder="Search users..." class="search-input">
                 <button type="submit" class="btn btn-info">Search</button>
             </form>
         </div>
-        <div class="actions-bar">
-            <a href="dashboard.php" class="btn btn-primary">Dashboard</a>
-        </div>
         
-                           <div class="container text-center">
-  <div class="row">
+    <div class="container text-center">
+        <div class="row">
             <table class="users-table">
                 <thead>
                     <tr>
@@ -44,7 +41,7 @@
                         <th>Status</th>
                         <th>IP Address</th>
                         <th>Created</th>
-                        <!-- <th>Actions</th> -->
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +54,16 @@
                         <td><?= displayStatusBadge($user->getStatus()) ?></td>
                         <td><?= htmlspecialchars($user->getIpAddress()) ?></td>
                         <td><?= formatDate($user->getCreatedAt()) ?></td>
-
+                        <td>
+                            <div class="actions">
+                                <a href="read.php?id=<?= $user->getId() ?>" class="btn btn-sm btn-info">View</a>
+                                <a href="update.php?id=<?= $user->getId() ?>" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="status.php?id=<?= $user->getId() ?>" class="btn btn-sm <?= $user->getStatus() === 'active' ? 'btn-danger' : 'btn-success' ?>">
+                                    <?= $user->getStatus() === 'active' ? 'Block' : 'Activate' ?>
+                                </a>
+                                <a href="delete.php?id=<?= $user->getId() ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                            </div>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
 

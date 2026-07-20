@@ -45,9 +45,29 @@ VALUES (:username, :email, :password, :secret_name, :full_name, :status, :ip_add
         }
     }
     //done.
-    public function getAllUsers() {
+    public function getActiveUsers() {
         try {
             $sql = "SELECT * FROM `users` WHERE `status` = 'active';";
+            // echo "<br>";
+            // print_r($sql);
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+
+            $users = [];
+            while($row = $stmt->fetch()) {
+                $users[] = new User($row);
+            }
+            // print_r($users);
+            return $users;
+
+        } catch(PDOException $e) {
+            throw new Exception("Error fetching users: " . $e->getMessage());
+        }
+    }
+        //done.
+    public function getAllUsers() {
+        try {
+            $sql = "SELECT * FROM `users`;";
             // echo "<br>";
             // print_r($sql);
             $stmt = $this->db->prepare($sql);
